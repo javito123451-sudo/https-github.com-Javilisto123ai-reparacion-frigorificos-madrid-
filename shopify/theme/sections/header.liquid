@@ -1,0 +1,15 @@
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a class="brand" href="{{ routes.root_url }}">{% if settings.logo %}<img src="{{ settings.logo | image_url: width: 160 }}" alt="{{ shop.name }}" height="32">{% else %}{{ shop.name }}{% endif %}</a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Menú">
+    <label for="nav-toggle" class="burger" aria-hidden="true">☰</label>
+    <nav class="nav" aria-label="Principal">
+      {% for link in linklists[section.settings.menu].links %}<a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>{% endfor %}
+      <a href="{{ routes.account_url }}">Mi cuenta</a>
+      <a class="btn btn-sm" href="{{ routes.cart_url }}">Carrito ({{ cart.item_count }})</a>
+    </nav>
+  </div>
+</header>
+{% schema %}
+{ "name": "Cabecera", "settings": [ { "type": "link_list", "id": "menu", "label": "Menú", "default": "main-menu" } ] }
+{% endschema %}

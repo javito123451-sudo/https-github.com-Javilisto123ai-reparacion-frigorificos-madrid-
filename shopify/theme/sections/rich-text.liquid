@@ -1,0 +1,4 @@
+<section class="sec"><div class="wrap narrow">{% if section.settings.title != blank %}<h1>{{ section.settings.title }}</h1>{% endif %}<div class="prose">{{ section.settings.content }}</div></div></section>
+{% schema %}
+{ "name": "Texto", "settings": [ { "type": "text", "id": "title", "label": "Título" }, { "type": "richtext", "id": "content", "label": "Contenido" } ], "presets": [{ "name": "Texto" }] }
+{% endschema %}

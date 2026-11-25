@@ -1,0 +1,1 @@
+{ "sections": { "plans": { "type": "plans", "settings": { "collection": "planes", "title": "Planes" } } }, "order": ["plans"] }

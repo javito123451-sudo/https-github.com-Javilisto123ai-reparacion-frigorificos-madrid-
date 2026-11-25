@@ -1,0 +1,4 @@
+{ "sections": { "main": { "type": "feature-grid", "settings": { "title": "Servicios profesionales", "intro": "Instalación, configuración e implantación acompañada." }, "blocks": {
+  "a": { "type": "item", "settings": { "title": "Instalación y configuración", "text": "Dejamos tu entorno listo para trabajar." } },
+  "b": { "type": "item", "settings": { "title": "Implantación y formación", "text": "Acompañamos a tu equipo durante el arranque." } },
+  "c": { "type": "item", "settings": { "title": "Soluciones personalizadas", "text": "Integraciones y desarrollos a medida.", "link": "/pages/contacto", "link_label": "Consultar" } } }, "block_order": ["a", "b", "c"] } }, "order": ["main"] }

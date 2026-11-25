@@ -1,0 +1,1 @@
+{ "sections": { "f": { "type": "contact-form", "settings": { "title": "Contacto y soporte", "intro": "Escríbenos y te respondemos.", "tag": "contacto" } } }, "order": ["f"] }

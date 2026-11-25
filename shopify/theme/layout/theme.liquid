@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_bg }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {% render 'meta-tags' %}
+  <link rel="stylesheet" href="{{ 'omnitech.css' | asset_url }}">
+  <style>
+    :root{--bg:{{ settings.color_bg }};--surface:{{ settings.color_surface }};--accent:{{ settings.color_accent }};--accent-2:{{ settings.color_accent_2 }};--text:{{ settings.color_text }}}
+  </style>
+  {{ content_for_header }}
+</head>
+<body>
+  <a class="skip" href="#main">Saltar al contenido</a>
+  {% sections 'header-group' %}
+  <main id="main">{{ content_for_layout }}</main>
+  {% sections 'footer-group' %}
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "_nota": "Fuente de verdad comercial = commerce_products (omnitech-core-v1). SKU = commerce_products.code: el OmniCommerce Bridge mapea las líneas de pedido por SKU. Precios en euros SIN IVA, suscripción mensual (confirmados 25-nov-2026). Los módulos NO se venden sueltos: no son productos de Shopify.",
+  "collections": [
+    { "handle": "planes", "title": "Planes" },
+    { "handle": "enterprise", "title": "Enterprise" }
+  ],
+  "sellingPlanGroup": { "name": "Suscripción mensual", "merchantCode": "omni-mensual", "planName": "Mensual", "interval": "MONTH", "intervalCount": 1 },
+  "products": [
+    { "sku": "plan_starter", "collection": "planes", "title": "Omnitech-Core Starter", "price": "149.00", "compareAtPrice": null,
+      "promo": { "price": "99.00", "compareAtPrice": "149.00", "activeByDefault": false },
+      "tags": ["plan", "starter"], "metafields": { "omni.plan": "starter" },
+      "descriptionHtml": "<p>Para empezar a trabajar con la plataforma.</p><ul><li>Omni CRM</li><li>WhatsApp Business</li><li>Omni Marketing Hub</li><li>Base de conocimiento</li><li>Omni Accounting</li><li>AI Agents y Agent Factory</li><li>Presupuestos</li><li>Portal de cliente</li></ul>" },
+    { "sku": "plan_professional", "collection": "planes", "title": "Omnitech-Core Professional", "price": "249.00", "compareAtPrice": null,
+      "tags": ["plan", "professional", "destacado"], "metafields": { "omni.plan": "professional" },
+      "descriptionHtml": "<p>Todo lo de Starter y más automatización.</p><ul><li>Todo lo incluido en Starter</li><li>Automations</li><li>Integraciones</li><li>Analytics</li><li>Omni Docs</li></ul>" },
+    { "sku": "plan_enterprise", "collection": "enterprise", "title": "Omnitech-Core Enterprise", "price": "1000.00", "compareAtPrice": null,
+      "tags": ["plan", "enterprise"], "metafields": { "omni.plan": "enterprise" },
+      "descriptionHtml": "<p>Todos los módulos del ecosistema Omni y configuración a medida.</p><ul><li>Todos los módulos</li><li>Acompañamiento en la implantación</li></ul>" }
+  ]
+}

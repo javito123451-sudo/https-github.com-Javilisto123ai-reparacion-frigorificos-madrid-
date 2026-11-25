@@ -1,0 +1,19 @@
+<footer class="ftr">
+  <div class="wrap ftr-in">
+    <div><strong>{{ shop.name }}</strong><p class="muted">{{ section.settings.tagline }}</p></div>
+    <nav aria-label="Legal">
+      <a href="{{ policies.privacy_policy.url }}">Privacidad</a>
+      <a href="{{ policies.terms_of_service.url }}">Términos</a>
+      <a href="{{ policies.refund_policy.url }}">Reembolsos</a>
+      <a href="{{ policies.legal_notice.url }}">Aviso legal</a>
+    </nav>
+    <div class="muted">
+      {% if settings.contact_email != blank %}<a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a><br>{% endif %}
+      {% if settings.contact_whatsapp != blank %}<a href="https://wa.me/{{ settings.contact_whatsapp }}">WhatsApp</a>{% endif %}
+    </div>
+  </div>
+  <div class="wrap muted small">© {{ 'now' | date: '%Y' }} {{ shop.name }}. Precios sin IVA salvo indicación. Datos alojados en la Unión Europea.</div>
+</footer>
+{% schema %}
+{ "name": "Pie", "settings": [ { "type": "text", "id": "tagline", "label": "Eslogan", "default": "La plataforma empresarial con IA para gestionar clientes, procesos y operaciones." } ] }
+{% endschema %}

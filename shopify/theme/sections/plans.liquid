@@ -1,0 +1,28 @@
+{%- assign col = collections[section.settings.collection] -%}
+<section class="sec" id="planes"><div class="wrap">
+  <h2>{{ section.settings.title }}</h2>
+  <p class="lead">{{ section.settings.intro }}</p>
+  <div class="grid plans">
+  {% for product in col.products %}
+    {%- assign v = product.selected_or_first_available_variant -%}
+    <article class="card plan{% if product.tags contains 'destacado' %} featured{% endif %}">
+      <h3>{{ product.title }}</h3>
+      <p class="price">{% if v.compare_at_price > v.price %}<s class="muted">{{ v.compare_at_price | money_without_trailing_zeros }}</s> {% endif %}{{ v.price | money_without_trailing_zeros }}<small>/mes + IVA</small></p>
+      {% if v.compare_at_price > v.price %}<p class="tag">Promoción de lanzamiento</p>{% endif %}
+      <div class="prose">{{ product.description }}</div>
+      <a class="btn" href="{{ product.url }}">Contratar</a>
+    </article>
+  {% else %}
+    <p class="muted">Añade los productos de plan a la colección «{{ section.settings.collection }}».</p>
+  {% endfor %}
+  </div>
+  <p class="muted small">{{ section.settings.note }}</p>
+</div></section>
+{% schema %}
+{ "name": "Planes", "settings": [
+  { "type": "text", "id": "title", "label": "Título", "default": "Planes" },
+  { "type": "textarea", "id": "intro", "label": "Introducción", "default": "Suscripción mensual. Tu contratación se activa tras la validación de nuestro equipo." },
+  { "type": "text", "id": "collection", "label": "Handle de la colección", "default": "planes" },
+  { "type": "text", "id": "note", "label": "Nota", "default": "Precios sin IVA. La compra registra tu solicitud; el acceso se activa cuando un administrador la aprueba." }
+], "presets": [{ "name": "Planes" }] }
+{% endschema %}

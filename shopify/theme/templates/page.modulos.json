@@ -1,0 +1,10 @@
+{ "sections": { "main": { "type": "modules-catalog", "blocks": {
+  "m1": { "type": "module", "settings": { "name": "Omni CRM", "text": "Gestión de clientes y relaciones. Incluido en todos los planes." } },
+  "m2": { "type": "module", "settings": { "name": "Omni Marketing Hub", "text": "Campañas y automatización de marketing.", "price": "35" } },
+  "m3": { "type": "module", "settings": { "name": "Omni Import AI", "text": "Importación inteligente de datos.", "price": "45" } },
+  "m4": { "type": "module", "settings": { "name": "OmniTax", "text": "Motor fiscal, calendario y simuladores.", "price": "25" } },
+  "m5": { "type": "module", "settings": { "name": "Omni Security Core", "text": "Seguridad y auditoría avanzada.", "price": "25" } },
+  "m6": { "type": "module", "settings": { "name": "Omni Accounting", "text": "Facturación, pagos y contabilidad.", "price": "25" } },
+  "m7": { "type": "module", "settings": { "name": "OmniAds", "text": "Centro de publicidad con IA.", "price": "45" } },
+  "m8": { "type": "module", "settings": { "name": "OmniLeads AI", "text": "Captación y gestión de leads con IA.", "price": "45" } } },
+  "block_order": ["m1", "m2", "m3", "m4", "m5", "m6", "m7", "m8"] } }, "order": ["main"] }

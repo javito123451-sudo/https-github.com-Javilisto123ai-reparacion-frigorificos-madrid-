@@ -1,0 +1,22 @@
+{%- assign v = product.selected_or_first_available_variant -%}
+<section class="sec"><div class="wrap narrow">
+  <h1>{{ product.title }}</h1>
+  <p class="price">{% if v.compare_at_price > v.price %}<s class="muted">{{ v.compare_at_price | money_without_trailing_zeros }}</s> {% endif %}{{ v.price | money_without_trailing_zeros }}<small>/mes + IVA</small></p>
+  <div class="prose">{{ product.description }}</div>
+  {%- form 'product', product, class: 'form' -%}
+    <input type="hidden" name="id" value="{{ v.id }}">
+    {%- if product.selling_plan_groups.size > 0 -%}
+      {%- assign group = product.selling_plan_groups.first -%}
+      <label>Modalidad de contratación
+        <select name="selling_plan" required>{% for sp in group.selling_plans %}<option value="{{ sp.id }}">{{ sp.name }}</option>{% endfor %}</select></label>
+    {%- endif -%}
+    <label>Email de facturación y acceso<input type="email" name="properties[Email de acceso]" required></label>
+    <label>Nombre de la empresa<input name="properties[Empresa]" required></label>
+    <label class="check"><input type="checkbox" required name="properties[Acepta términos y privacidad]" value="sí"> Acepto los <a href="{{ policies.terms_of_service.url }}">términos</a> y la <a href="{{ policies.privacy_policy.url }}">política de privacidad</a>.</label>
+    <p class="notice">Importante: tu pago registra una solicitud de contratación. El acceso a tu entorno se activa cuando nuestro equipo la valida y te enviamos el correo de bienvenida.</p>
+    <button class="btn" type="submit" {% unless v.available %}disabled{% endunless %}>{% if v.available %}Contratar{% else %}No disponible{% endif %}</button>
+  {%- endform -%}
+</div></section>
+{% schema %}
+{ "name": "Producto" }
+{% endschema %}

@@ -1,0 +1,3 @@
+{ "sections": { "t": { "type": "rich-text", "settings": { "title": "Enterprise", "content": "<p>Todos los módulos, configuración a medida y acompañamiento en la implantación. Para empresas con necesidades específicas de integración, volumen o seguridad.</p>" } },
+  "c": { "type": "plans", "settings": { "collection": "enterprise", "title": "Plan Enterprise" } },
+  "f": { "type": "contact-form", "settings": { "title": "Hablemos de tu caso", "tag": "enterprise", "button": "Solicitar propuesta" } } }, "order": ["t", "c", "f"] }

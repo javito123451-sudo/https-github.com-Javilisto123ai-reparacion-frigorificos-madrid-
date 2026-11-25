@@ -1,0 +1,1 @@
+{ "sections": { "f": { "type": "contact-form", "settings": { "title": "Solicitar demostración", "intro": "Cuéntanos tu empresa y qué quieres ver.", "tag": "demo", "button": "Solicitar demostración" } } }, "order": ["f"] }

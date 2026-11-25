@@ -8,3 +8,5 @@ Hecho: Fase 2 (migración aditiva) y Fase 4 (Bridge) y backend de Fase 5; Fase 6
 Pendiente: tema/productos Shopify (Fase 3), pantallas React de OmniCommerce Control, pruebas con Shopify real, puesta en producción.
 
 **Discrepancias a decidir:** `credit_plans` (BD) dice Professional 349 € y existe plan Business 699 €; el catálogo comercial usa Professional 249 € y no incluye Business. No se ha tocado `credit_plans`.
+
+**Fase 3 (tienda Shopify) — borrador completo en `shopify/`:** tema OS2.0, catálogo y sincronizador (dry-run probado). Pendiente de credenciales para aplicar/probar en tienda real. Ver `shopify/README.md`.

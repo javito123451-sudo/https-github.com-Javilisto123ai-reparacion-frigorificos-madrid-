@@ -1,0 +1,14 @@
+<section class="sec"><div class="wrap narrow"><h1>Carrito</h1>
+{% if cart.item_count == 0 %}<p>Tu carrito está vacío. <a href="/pages/planes">Ver planes</a></p>{% else %}
+<form action="{{ routes.cart_url }}" method="post" class="form">
+  {% for item in cart.items %}<div class="card"><strong>{{ item.product.title }}</strong>{% if item.selling_plan_allocation %} · {{ item.selling_plan_allocation.selling_plan.name }}{% endif %}
+    <div>{{ item.final_line_price | money }} + IVA</div>
+    {% for p in item.properties %}{% unless p.last == blank %}<div class="muted small">{{ p.first }}: {{ p.last }}</div>{% endunless %}{% endfor %}
+    <a href="{{ item.url_to_remove }}">Quitar</a></div>{% endfor %}
+  <p class="price">Total: {{ cart.total_price | money }} <small>+ IVA</small></p>
+  <p class="notice">Tu contratación quedará pendiente de validación administrativa antes de activarse.</p>
+  <button class="btn" name="checkout">Finalizar compra</button>
+</form>{% endif %}</div></section>
+{% schema %}
+{ "name": "Carrito" }
+{% endschema %}

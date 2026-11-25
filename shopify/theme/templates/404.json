@@ -1,0 +1,1 @@
+{ "sections": { "main": { "type": "rich-text", "settings": { "title": "Página no encontrada", "content": "<p><a href=\"/\">Volver al inicio</a></p>" } } }, "order": ["main"] }

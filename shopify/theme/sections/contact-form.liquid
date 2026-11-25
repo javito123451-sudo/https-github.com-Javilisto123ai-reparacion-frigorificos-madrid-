@@ -1,0 +1,23 @@
+<section class="sec" id="formulario"><div class="wrap narrow">
+  <h1>{{ section.settings.title }}</h1><p class="lead">{{ section.settings.intro }}</p>
+  {% form 'contact', class: 'form' %}
+    {% if form.posted_successfully? %}<p class="ok">Gracias. Hemos recibido tu mensaje y te responderemos lo antes posible.</p>{% endif %}
+    {{ form.errors | default_errors }}
+    <input type="hidden" name="contact[tags]" value="{{ section.settings.tag }}">
+    <label>Nombre<input name="contact[name]" required autocomplete="name"></label>
+    <label>Empresa<input name="contact[company]" autocomplete="organization"></label>
+    <label>Email<input type="email" name="contact[email]" required autocomplete="email"></label>
+    <label>Teléfono<input type="tel" name="contact[phone]" autocomplete="tel"></label>
+    <label>¿Qué necesitas?<textarea name="contact[body]" rows="5" required></textarea></label>
+    <label class="check"><input type="checkbox" required name="contact[consentimiento]" value="aceptado"> He leído la <a href="{{ policies.privacy_policy.url }}">política de privacidad</a> y acepto el tratamiento de mis datos para responder a mi solicitud.</label>
+    <button class="btn" type="submit">{{ section.settings.button }}</button>
+  {% endform %}
+</div></section>
+{% schema %}
+{ "name": "Formulario de contacto", "settings": [
+  { "type": "text", "id": "title", "label": "Título", "default": "Contacto y soporte" },
+  { "type": "textarea", "id": "intro", "label": "Introducción" },
+  { "type": "text", "id": "tag", "label": "Etiqueta interna", "default": "contacto" },
+  { "type": "text", "id": "button", "label": "Botón", "default": "Enviar" }
+], "presets": [{ "name": "Formulario de contacto" }] }
+{% endschema %}

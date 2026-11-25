@@ -1,0 +1,17 @@
+<section class="sec" id="modulos"><div class="wrap">
+  <h2>{{ section.settings.title }}</h2><p class="lead">{{ section.settings.intro }}</p>
+  <div class="grid">{% for b in section.blocks %}
+    <article class="card" {{ b.shopify_attributes }}><h3>{{ b.settings.name }}</h3><p>{{ b.settings.text }}</p>
+      {% if section.settings.show_prices and b.settings.price != blank %}<p class="tag">Complemento desde {{ b.settings.price }} €/mes + IVA</p>{% endif %}</article>
+  {% endfor %}</div>
+  <p class="muted small">Los módulos no se contratan por separado: se incorporan a tu plan según tus necesidades. <a href="/pages/contacto">Cuéntanos qué necesitas</a>.</p>
+</div></section>
+{% schema %}
+{ "name": "Catálogo de módulos", "settings": [
+  { "type": "text", "id": "title", "label": "Título", "default": "Módulos del ecosistema Omni" },
+  { "type": "textarea", "id": "intro", "label": "Introducción", "default": "Una plataforma modular: añade solo lo que tu empresa necesita." },
+  { "type": "checkbox", "id": "show_prices", "label": "Mostrar precio de los complementos", "default": false }
+], "blocks": [ { "type": "module", "name": "Módulo", "settings": [
+  { "type": "text", "id": "name", "label": "Nombre" }, { "type": "textarea", "id": "text", "label": "Descripción" }, { "type": "text", "id": "price", "label": "Precio €/mes sin IVA" } ] } ],
+  "presets": [{ "name": "Catálogo de módulos" }] }
+{% endschema %}

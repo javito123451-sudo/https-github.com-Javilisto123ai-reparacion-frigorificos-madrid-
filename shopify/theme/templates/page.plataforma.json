@@ -1,0 +1,4 @@
+{ "sections": { "main": { "type": "feature-grid", "settings": { "title": "Plataforma Omnitech-Core", "intro": "El motor tecnológico y operativo de tu empresa: multiempresa, permisos por rol, auditoría y seguridad." }, "blocks": {
+  "a": { "type": "item", "settings": { "title": "Multiempresa y workspaces", "text": "Aislamiento de datos por empresa, equipos y roles." } },
+  "b": { "type": "item", "settings": { "title": "Omni Security Core", "text": "Seguridad y auditoría avanzada." } },
+  "c": { "type": "item", "settings": { "title": "Ava Omni", "text": "Asistente de IA integrado en la plataforma." } } }, "block_order": ["a", "b", "c"] } }, "order": ["main"] }

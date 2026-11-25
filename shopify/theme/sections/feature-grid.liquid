@@ -1,0 +1,11 @@
+<section class="sec"><div class="wrap">
+  {% if section.settings.title != blank %}<h2>{{ section.settings.title }}</h2>{% endif %}
+  {% if section.settings.intro != blank %}<p class="lead">{{ section.settings.intro }}</p>{% endif %}
+  <div class="grid">{% for b in section.blocks %}<article class="card" {{ b.shopify_attributes }}><h3>{{ b.settings.title }}</h3><p>{{ b.settings.text }}</p>
+    {% if b.settings.link != blank %}<a href="{{ b.settings.link }}">{{ b.settings.link_label | default: 'Más información' }} →</a>{% endif %}</article>{% endfor %}</div>
+</div></section>
+{% schema %}
+{ "name": "Rejilla de características", "settings": [ { "type": "text", "id": "title", "label": "Título" }, { "type": "textarea", "id": "intro", "label": "Introducción" } ],
+  "blocks": [ { "type": "item", "name": "Elemento", "settings": [ { "type": "text", "id": "title", "label": "Título" }, { "type": "textarea", "id": "text", "label": "Texto" }, { "type": "url", "id": "link", "label": "Enlace" }, { "type": "text", "id": "link_label", "label": "Texto del enlace" } ] } ],
+  "presets": [{ "name": "Rejilla de características" }] }
+{% endschema %}

@@ -1,0 +1,4 @@
+{ "sections": { "main": { "type": "feature-grid", "settings": { "title": "Soluciones", "intro": "Combinaciones de módulos para los problemas más habituales." }, "blocks": {
+  "a": { "type": "item", "settings": { "title": "Ventas y clientes", "text": "Omni CRM, presupuestos y portal de cliente." } },
+  "b": { "type": "item", "settings": { "title": "Marketing y captación", "text": "Omni Marketing Hub, WhatsApp y OmniLeads." } },
+  "c": { "type": "item", "settings": { "title": "Administración y fiscalidad", "text": "Omni Accounting y OmniTax." } } }, "block_order": ["a", "b", "c"] } }, "order": ["main"] }
