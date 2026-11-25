@@ -1,0 +1,48 @@
+{"id": "F01", "label": "fraud", "channel": "wallapop", "text": "Hola! Me interesa tu móvil. Te hago una señal de 30€ ahora mismo y mi transportista lo recoge, pero tienes que pagar el seguro de envío en este enlace de Correos para cobrar el dinero.", "synthetic": true}
+{"id": "F02", "label": "fraud", "channel": "wallapop", "text": "Lo quiero pero estoy fuera. Pásame tu WhatsApp, te mando un enlace de pago y así recibes el dinero hoy mismo.", "synthetic": true}
+{"id": "F03", "label": "fraud", "channel": "wallapop", "text": "Te compro la consola ya, necesito que me confirmes con el código de verificación que te llegará por SMS para poder cobrar.", "synthetic": true}
+{"id": "F04", "label": "fraud", "channel": "vinted", "text": "Hola, he pagado pero Vinted dice que debes verificar tu cuenta con este link y meter los datos de tu tarjeta para recibir el pago.", "synthetic": true}
+{"id": "F05", "label": "fraud", "channel": "milanuncios", "text": "Piso en alquiler, 300€ al mes en el centro. Estoy en el extranjero, haz una señal de 600€ por transferencia y te mando las llaves por mensajería.", "synthetic": true}
+{"id": "F06", "label": "fraud", "channel": "whatsapp", "text": "Mamá, he perdido el móvil, este es mi nuevo número. Necesito que me hagas un Bizum urgente de 480€ ahora mismo.", "synthetic": true}
+{"id": "F07", "label": "fraud", "channel": "sms", "text": "BBVA: su cuenta bancaria ha sido bloqueada por actividad sospechosa. Verifique su acceso en http://bbva-seguro.top/login", "synthetic": true}
+{"id": "F08", "label": "fraud", "channel": "sms", "text": "Correos: su paquete retenido requiere el pago de 1,99€. Pague aquí para recibirlo antes de que se devuelva: https://correos-envios.xyz", "synthetic": true}
+{"id": "F09", "label": "fraud", "channel": "email", "text": "Hacienda: tienes un reembolso pendiente de 312,45€. Introduce los datos de tu tarjeta para recibirlo.", "synthetic": true}
+{"id": "F10", "label": "fraud", "channel": "email", "text": "Felicidades, has ganado un iPhone 15. Paga solo 2,50€ de gastos de envío con tarjeta para recibir tu premio.", "synthetic": true}
+{"id": "F11", "label": "fraud", "channel": "inversion", "text": "Rentabilidad garantizada del 3% diario sin riesgo. Invierte 250€ en nuestra plataforma de trading con criptomonedas hoy.", "synthetic": true}
+{"id": "F12", "label": "fraud", "channel": "inversion", "text": "Duplica tu inversión en una semana. Beneficios garantizados, última oportunidad, solo hoy.", "synthetic": true}
+{"id": "F13", "label": "fraud", "channel": "alojamiento", "text": "Apartamento en la playa a 40€ la noche. Reserva pagando el 50% por adelantado con Western Union, hay más gente interesada.", "synthetic": true}
+{"id": "F14", "label": "fraud", "channel": "vehiculos", "text": "Vendo coche 2019 por 4.000€, urgente por divorcio. No puedes verlo, te lo mando por transporte tras pagar la reserva con tarjeta regalo.", "synthetic": true}
+{"id": "F15", "label": "fraud", "channel": "entradas", "text": "Vendo 2 entradas del concierto, agotadas en todos sitios. Solo pago por adelantado fuera de la plataforma, escríbeme por Telegram.", "synthetic": true}
+{"id": "F16", "label": "fraud", "channel": "presencial", "text": "Un señor me ha abordado por la calle y me ofrece un reloj Rolex por 100 euros, solo efectivo, dice que necesita el dinero ya.", "synthetic": true}
+{"id": "F17", "label": "fraud", "channel": "presencial", "text": "Me ofrecen un iPhone nuevo precintado por 80€ en la calle, no me deja probarlo, solo en efectivo ahora mismo.", "synthetic": true}
+{"id": "F18", "label": "fraud", "channel": "whatsapp", "text": "Hola, soy del banco Santander. Su cuenta ha sido bloqueada por acceso no autorizado. Facilítenos el código de seguridad que recibirá.", "synthetic": true}
+{"id": "F19", "label": "fraud", "channel": "sms", "text": "Tienes un cargo pendiente en tu cuenta. Responde con el PIN de tu tarjeta para cancelar el pago.", "synthetic": true}
+{"id": "F20", "label": "fraud", "channel": "wallapop", "text": "Compro tu bici. Te mando un link de pago externo para que cobres, fuera de Wallapop, es más rápido y sin comisiones.", "synthetic": true}
+{"id": "F21", "label": "fraud", "channel": "email", "text": "Tu cuenta de Netflix ha sido suspendida. Introduce los datos de tu tarjeta en este enlace para reactivarla, última oportunidad.", "synthetic": true}
+{"id": "F22", "label": "fraud", "channel": "alojamiento", "text": "Villa de lujo, 90€/noche. Pago solo por Bizum adelantado, no se admite revisión ni visita previa. Reserva ya.", "synthetic": true}
+{"id": "F23", "label": "fraud", "channel": "presencial", "text": "Un desconocido me ofrece una cadena de oro por la calle, dice que es de su difunto padre y necesita dinero ya, solo efectivo.", "synthetic": true}
+{"id": "F24", "label": "fraud", "channel": "whatsapp", "text": "Hola cariño, necesito dinero para una operación de mi hijo, mándame 500€ por Western Union urgente.", "synthetic": true}
+{"id": "L01", "label": "legit", "channel": "wallapop", "text": "Hola, ¿sigue disponible la bicicleta? Puedo quedar el sábado por la mañana para verla y probarla.", "synthetic": true}
+{"id": "L02", "label": "legit", "channel": "wallapop", "text": "Vendo lavadora Bosch 7kg, funciona perfectamente, 120€ negociables. Recogida en mano, puedes probarla antes.", "synthetic": true}
+{"id": "L03", "label": "legit", "channel": "wallapop", "text": "Vendo iPhone 13 de 128GB con factura y caja, 420€. Pago a través de la plataforma con envío protegido.", "synthetic": true}
+{"id": "L04", "label": "legit", "channel": "vinted", "text": "Hola! Me encanta el vestido, ¿haces envío con Vinted Go? Lo compro con pago protegido.", "synthetic": true}
+{"id": "L05", "label": "legit", "channel": "milanuncios", "text": "Alquilo habitación en Madrid, 450€ al mes. Puedes venir a verla cuando quieras, contrato y fianza oficial.", "synthetic": true}
+{"id": "L06", "label": "legit", "channel": "whatsapp", "text": "Hola, te confirmo que quedamos el viernes a las 18h en la cafetería de siempre.", "synthetic": true}
+{"id": "L07", "label": "legit", "channel": "whatsapp", "text": "Mamá, llego tarde a cenar, no me esperéis.", "synthetic": true}
+{"id": "L08", "label": "legit", "channel": "sms", "text": "Tu pedido de Amazon ha sido enviado y llegará mañana entre las 9 y las 14h.", "synthetic": true}
+{"id": "L09", "label": "legit", "channel": "email", "text": "Gracias por tu compra. Adjuntamos la factura de tu pedido número 4521.", "synthetic": true}
+{"id": "L10", "label": "legit", "channel": "email", "text": "Recordatorio: tu cita en el dentista es el jueves a las 10:30.", "synthetic": true}
+{"id": "L11", "label": "legit", "channel": "inversion", "text": "Los fondos indexados pueden subir o bajar; invierte solo lo que no necesites a corto plazo.", "synthetic": true}
+{"id": "L12", "label": "legit", "channel": "alojamiento", "text": "Apartamento en la playa, 95€ la noche. Reserva a través de Booking con cancelación gratuita.", "synthetic": true}
+{"id": "L13", "label": "legit", "channel": "vehiculos", "text": "Vendo coche 2016 con ITV en vigor y libro de mantenimiento. 6.500€. Puedes llevarlo a tu mecánico antes de decidir.", "synthetic": true}
+{"id": "L14", "label": "legit", "channel": "entradas", "text": "Vendo 2 entradas de concierto al precio original, 45€ cada una, entrega en mano y las compruebas en la app oficial.", "synthetic": true}
+{"id": "L15", "label": "legit", "channel": "presencial", "text": "Compro un reloj Casio vintage en un mercadillo por 35€, el vendedor me deja probarlo y tiene ticket de compra.", "synthetic": true}
+{"id": "L16", "label": "legit", "channel": "presencial", "text": "Un amigo me vende su iPhone 12 por 300€, lo he podido revisar y tiene factura.", "synthetic": true}
+{"id": "L17", "label": "legit", "channel": "presencial", "text": "Voy a comprar una guitarra usada por 150€ en una tienda de segunda mano, puedo probarla antes.", "synthetic": true}
+{"id": "L18", "label": "legit", "channel": "wallapop", "text": "Vendo bolso de mano de piel, 40€. Tengo fotos del interior y de las costuras, pregunta lo que quieras.", "synthetic": true}
+{"id": "L19", "label": "legit", "channel": "wallapop", "text": "Chollo: patinete eléctrico a 180€ porque me han regalado uno nuevo. Lo ves y lo pruebas antes de pagar.", "synthetic": true}
+{"id": "L20", "label": "legit", "channel": "email", "text": "Tu suscripción se renovará el mes que viene. Puedes cancelarla desde tu perfil.", "synthetic": true}
+{"id": "L21", "label": "legit", "channel": "sms", "text": "Tu código de acceso a la banca online es 482913. No lo compartas con nadie.", "synthetic": true}
+{"id": "L22", "label": "legit", "channel": "wallapop", "text": "Vendo PlayStation 5 con dos mandos, 320€, en perfecto estado. Quedamos en un centro comercial y la pruebas.", "synthetic": true}
+{"id": "L23", "label": "legit", "channel": "alojamiento", "text": "Casa rural para 6 personas, 120€ la noche. Se paga una señal del 20% con Airbnb, el resto al llegar.", "synthetic": true}
+{"id": "L24", "label": "legit", "channel": "whatsapp", "text": "Hola, soy el repartidor, estoy en tu portal con el paquete de ayer.", "synthetic": true}

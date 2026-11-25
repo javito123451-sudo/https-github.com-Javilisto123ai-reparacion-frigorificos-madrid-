@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1d26">
+<title>¿Me engañan?</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <h1>¿Me <em>engañan</em>?</h1>
+  <p class="tag">Comprueba una oferta antes de pagar.</p>
+  <p id="aistate" class="chip" role="status"></p>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Qué quieres comprobar">
+  <button role="tab" data-tab="text" aria-selected="true">Mensaje</button>
+  <button role="tab" data-tab="url" aria-selected="false">Enlace</button>
+  <button role="tab" data-tab="photo" aria-selected="false">Producto</button>
+  <button role="tab" data-tab="history" aria-selected="false">Historial</button>
+</nav>
+
+<main>
+  <section id="tab-text" class="panel">
+    <label for="t-text">Pega el mensaje, anuncio o conversación</label>
+    <textarea id="t-text" rows="7" maxlength="20000" placeholder="Ej.: «Hola, me interesa. Hazme una señal de 50 € por Bizum, es urgente…»"></textarea>
+    <details class="more"><summary>Añadir contexto (mejora el análisis)</summary>
+      <div class="grid">
+        <label>Precio pedido (€)<input id="t-price" type="number" min="0" inputmode="decimal"></label>
+        <label>Valor de referencia (€)<input id="t-ref" type="number" min="0" inputmode="decimal"></label>
+        <label>Canal<select id="t-channel"><option value="">—</option><option>wallapop</option><option>vinted</option><option>milanuncios</option><option>marketplace</option><option>whatsapp</option><option>sms</option><option>email</option><option>web</option><option>otro</option></select></label>
+      </div>
+    </details>
+    <button class="go" id="go-text">Analizar mensaje</button>
+  </section>
+
+  <section id="tab-url" class="panel" hidden>
+    <label for="u-url">Pega el enlace sospechoso</label>
+    <input id="u-url" type="url" inputmode="url" placeholder="https://…" autocomplete="off">
+    <p class="hint">El enlace <b>no se abre en tu móvil</b>: lo examina el servidor de forma segura y pasiva.</p>
+    <button class="go" id="go-url">Comprobar enlace</button>
+  </section>
+
+  <section id="tab-photo" class="panel" hidden>
+    <p class="warn">Una foto <b>no puede certificar</b> que un producto sea auténtico. Esta herramienta señala indicios y qué comprobar; para confirmarlo hace falta un profesional.</p>
+    <div class="shots" id="shots"></div>
+    <div class="row">
+      <label class="btn alt">📷 Hacer foto<input id="p-cam" type="file" accept="image/*" capture="environment" hidden></label>
+      <label class="btn alt">🖼️ Elegir imagen<input id="p-file" type="file" accept="image/*" multiple hidden></label>
+    </div>
+    <div class="grid">
+      <label>Marca anunciada<input id="p-brand" maxlength="80" placeholder="Rolex, Gucci, iPhone…"></label>
+      <label>Precio pedido (€)<input id="p-price" type="number" min="0" inputmode="decimal"></label>
+      <label>Valor de tienda (€)<input id="p-ref" type="number" min="0" inputmode="decimal"></label>
+    </div>
+    <label for="p-sit">¿Qué te han dicho? (situación, historia, forma de pago…)</label>
+    <textarea id="p-sit" rows="3" maxlength="2000" placeholder="Me lo ofrece un desconocido por la calle, dice que es original y lo quiere en efectivo ya…"></textarea>
+    <button class="go" id="go-photo">Analizar producto</button>
+  </section>
+
+  <section id="tab-history" class="panel" hidden>
+    <div id="hist"></div>
+    <button class="ghost" id="del-all">Borrar todo mi historial</button>
+  </section>
+
+  <p id="err" class="err" role="alert" hidden></p>
+  <div id="busy" class="busy" hidden><span class="spin"></span> Analizando…</div>
+  <article id="result" hidden></article>
+</main>
+
+<footer>
+  <p>La puntuación indica señales de riesgo, <b>no</b> una probabilidad de fraude. Nunca se evalúa a las personas por su aspecto u origen. Tus análisis se borran solos a los <span id="ret">30</span> días; no guardamos el texto ni las fotos que envías.</p>
+  <p>Si ya has pagado: contacta con tu banco y denuncia. INCIBE: <b>017</b>.</p>
+</footer>
+<script src="app.js" type="module"></script>
+</body>
+</html>
