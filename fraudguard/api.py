@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import os
 import secrets
 from pathlib import Path
 
@@ -79,9 +78,9 @@ def create_app(settings: Settings | None = None, provider: LLMProvider | None | 
 
     @app.get("/api/health")
     def health():
-        return {"status": "ok", "version": __version__, "ai_connected": svc.provider is not None and bool(
-            os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_TOKEN") or getattr(svc.provider, "name", "") != "anthropic"),
-            "model": getattr(svc.provider, "model", None), "retention_days": settings.retention_days}
+        return {"status": "ok", "version": __version__, "ai_connected": svc.provider is not None,
+                "provider": getattr(svc.provider, "name", None), "model": getattr(svc.provider, "model", None),
+                "retention_days": settings.retention_days}
 
     @app.post("/api/analyze/text")
     def analyze_text(body: TextIn, who: str = Depends(limited)):

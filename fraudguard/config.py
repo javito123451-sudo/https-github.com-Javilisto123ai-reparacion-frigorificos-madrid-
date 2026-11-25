@@ -17,7 +17,7 @@ def _bool(name: str, default: bool = False) -> bool:
 
 @dataclass(frozen=True)
 class Settings:
-    model: str = "claude-opus-5-5"
+    model: str = "gpt-4o"
     db_path: str = "data/fraudguard.db"
     retention_days: int = 30
     rate_per_hour: int = 30

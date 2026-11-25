@@ -1,4 +1,4 @@
-"""Proveedor de IA: la API de Claude extrae SEÑALES TIPADAS; nunca calcula la puntuación.
+"""Proveedor de IA: la API de OpenAI extrae SEÑALES TIPADAS; nunca calcula la puntuación.
 
 Defensa contra prompt injection: el contenido del usuario va dentro de <untrusted_content>, el modelo solo puede
 devolver códigos del catálogo (salida estructurada validada) y el motor ignora cualquier texto libre al puntuar.
@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from typing import Literal, Protocol
 
-import anthropic
+import openai
 from pydantic import BaseModel, Field
 
 from .catalog import CATALOG, MITIGATORS
@@ -97,43 +97,47 @@ def build_user_content(kind: str, text: str, images: list[tuple[str, str]], cont
     body = (f"Tipo de análisis: {kind}\nContexto aportado por el usuario (también no confiable):\n"
             + ("\n".join(ctx_lines) if ctx_lines else "(ninguno)")
             + f"\n\n<untrusted_content>\n{text}\n</untrusted_content>\n\nDevuelve las señales según el esquema.")
-    blocks: list[dict] = [{"type": "image", "source": {"type": "base64", "media_type": mt, "data": b64}}
+    blocks: list[dict] = [{"type": "image_url", "image_url": {"url": f"data:{mt};base64,{b64}", "detail": "high"}}
                           for b64, mt in images]
     blocks.append({"type": "text", "text": body})
     return blocks
 
 
-class ClaudeProvider:
-    name = "anthropic"
+class OpenAIProvider:
+    name = "openai"
 
-    def __init__(self, model: str = "claude-opus-5-5", client: anthropic.Anthropic | None = None, timeout: float = 90.0):
+    def __init__(self, model: str = "gpt-4o", client: openai.OpenAI | None = None, timeout: float = 90.0):
         self.model = model
-        self.client = client or anthropic.Anthropic(timeout=timeout, max_retries=2)
+        self.client = client or openai.OpenAI(timeout=timeout, max_retries=2)   # lee OPENAI_API_KEY
 
     def extract(self, *, kind: str, text: str, images: list[tuple[str, str]], context: dict) -> Extraction:
         try:
-            resp = self.client.messages.parse(
+            resp = self.client.chat.completions.parse(
                 model=self.model,
-                max_tokens=8000,
-                system=SYSTEM_PROMPT,
-                messages=[{"role": "user", "content": build_user_content(kind, text, images, context)}],
-                output_format=Extraction,
+                max_completion_tokens=8000,
+                store=False,                       # no conservar la conversación en OpenAI
+                messages=[{"role": "system", "content": SYSTEM_PROMPT},
+                          {"role": "user", "content": build_user_content(kind, text, images, context)}],
+                response_format=Extraction,
             )
-        except anthropic.APIStatusError as e:   # 4xx/5xx
+        except openai.APIStatusError as e:         # 4xx/5xx
             raise LLMError(f"Error de la API ({e.status_code}).") from e
-        except anthropic.APIConnectionError as e:
+        except openai.APIConnectionError as e:
             raise LLMError("No se pudo conectar con la API de IA.") from e
-        except TypeError as e:   # el SDK lo lanza cuando no hay credenciales
-            raise LLMError("Falta configurar ANTHROPIC_API_KEY.") from e
-        if resp.stop_reason == "refusal":
+        except openai.OpenAIError as e:            # p. ej. falta la clave
+            raise LLMError("Falta configurar OPENAI_API_KEY.") from e
+        if not resp.choices:
+            raise LLMError("La IA no devolvió respuesta.")
+        msg = resp.choices[0].message
+        if getattr(msg, "refusal", None) or resp.choices[0].finish_reason == "content_filter":
             raise LLMRefusal("El modelo rechazó analizar este contenido.")
-        if resp.parsed_output is None:
+        if msg.parsed is None:
             raise LLMError("La IA no devolvió un resultado válido.")
-        return resp.parsed_output
+        return msg.parsed
 
 
-def make_default_provider(model: str) -> ClaudeProvider | None:
+def make_default_provider(model: str) -> OpenAIProvider | None:
     try:
-        return ClaudeProvider(model=model)
-    except Exception:  # sin credenciales: el servicio funcionará solo con reglas
+        return OpenAIProvider(model=model)
+    except Exception:  # sin OPENAI_API_KEY: el servicio funcionará solo con reglas
         return None

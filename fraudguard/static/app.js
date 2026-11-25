@@ -133,6 +133,6 @@ $("#del-all").addEventListener("click", async () => {
 });
 
 api("/api/health").then((h) => {
-  const c = $("#aistate"); c.textContent = h.ai_connected ? `IA conectada · ${h.model}` : "Modo reglas (sin IA conectada)"; c.classList.toggle("on", h.ai_connected);
+  const c = $("#aistate"); c.textContent = h.ai_connected ? `IA conectada · OpenAI ${h.model}` : "Modo reglas (sin IA conectada)"; c.classList.toggle("on", h.ai_connected);
   $("#ret").textContent = h.retention_days;
 }).catch(() => {});

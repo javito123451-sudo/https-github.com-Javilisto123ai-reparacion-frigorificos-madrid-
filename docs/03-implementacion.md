@@ -9,7 +9,7 @@ Decisiones tomadas para entregar algo funcional ya; todas reversibles.
 | Redis + workers | Análisis síncrono (≈ segundos) | Se añade cola cuando la carga lo pida |
 | Cuentas + 2FA | Sesión anónima (cookie `HttpOnly`) | Pendiente; el historial se pierde al borrar cookies |
 | PDF | Informe HTML imprimible | Pendiente PDF servidor |
-| Modelo | `claude-opus-5-5`, configurable | Máxima calidad; el coste real debe medirse |
+| Proveedor de IA | OpenAI (`gpt-4o` por defecto, configurable) tras la interfaz `LLMProvider`; cambiar de proveedor no toca el motor | El coste real debe medirse |
 
 ## Seguridad implementada y probada
 SSRF (IP pública validada en cada salto, petición fijada a la IP, puertos/esquemas/tamaño/redirecciones acotados), prompt injection
