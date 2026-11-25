@@ -1,0 +1,10 @@
+# Estado de OmniCommerce (2026-11-25)
+
+Código en `javito123451-sudo/omnitech-core-v1`, rama `claude/omnicommerce-bridge` (sin tocar `main`). Detalle en `docs/omnicommerce/` de esa rama.
+
+**Precios confirmados** (mensual, sin IVA): Starter 149 € (promo lanzamiento 99 €, desactivada), Professional 249 €, Enterprise 1.000 €. Stripe no es fuente (solo existió un 99 € + IVA antiguo, descartado).
+
+Hecho: Fase 2 (migración aditiva) y Fase 4 (Bridge) y backend de Fase 5; Fase 6 parcial con 20/20 pruebas en BD real.
+Pendiente: tema/productos Shopify (Fase 3), pantallas React de OmniCommerce Control, pruebas con Shopify real, puesta en producción.
+
+**Discrepancias a decidir:** `credit_plans` (BD) dice Professional 349 € y existe plan Business 699 €; el catálogo comercial usa Professional 249 € y no incluye Business. No se ha tocado `credit_plans`.
