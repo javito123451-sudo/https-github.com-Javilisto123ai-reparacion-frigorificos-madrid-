@@ -7,8 +7,10 @@ Decisiones tomadas para entregar algo funcional ya; todas reversibles.
 | Next.js PWA | HTML/JS/CSS estáticos servidos por FastAPI (instalable, `manifest`) | Menos piezas; mismo contrato REST, migrable |
 | PostgreSQL + RLS | SQLite, aislamiento por hash de sesión | Cero infraestructura; esquema portable |
 | Redis + workers | Análisis síncrono (≈ segundos) | Se añade cola cuando la carga lo pida |
-| Cuentas + 2FA | Sesión anónima (cookie `HttpOnly`) | Pendiente; el historial se pierde al borrar cookies |
-| PDF | Informe HTML imprimible | Pendiente PDF servidor |
+| Cuentas + 2FA | Cuentas email/contraseña + sesiones; sesión anónima si no hay cuenta | Sin 2FA ni verificación de email (requiere proveedor de correo) |
+| PDF | PDF nativo (reportlab) + informe HTML | Hecho |
+| Suscripciones | Planes y cuotas internos; plan asignado por admin | Sin pasarela de pago: no se inventa una integración |
+| API pública | Claves Bearer hasheadas sobre los mismos endpoints | Sin facturación por consumo |
 | Proveedor de IA | OpenAI (`gpt-4o` por defecto, configurable) tras la interfaz `LLMProvider`; cambiar de proveedor no toca el motor | El coste real debe medirse |
 
 ## Seguridad implementada y probada

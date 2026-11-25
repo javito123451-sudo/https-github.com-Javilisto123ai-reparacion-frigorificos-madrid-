@@ -30,6 +30,8 @@ class Settings:
     # Si es True, httpx usa HTTP(S)_PROXY del entorno (p. ej. despliegues tras proxy corporativo).
     fetch_trust_env: bool = False
     secure_cookies: bool = False
+    admin_email: str = ""          # quien se registre con este email será administrador
+    session_days: int = 30
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -42,4 +44,5 @@ class Settings:
             allow_private_fetch=_bool("FG_ALLOW_PRIVATE_FETCH"),
             fetch_trust_env=_bool("FG_FETCH_TRUST_ENV"),
             secure_cookies=_bool("FG_SECURE_COOKIES"),
+            admin_email=os.getenv("FG_ADMIN_EMAIL", "").strip().lower(),
         )

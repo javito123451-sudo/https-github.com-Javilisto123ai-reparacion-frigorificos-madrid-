@@ -4,3 +4,4 @@ openai>=1.40
 pillow>=10
 python-multipart>=0.0.9
 pydantic>=2
+reportlab>=4

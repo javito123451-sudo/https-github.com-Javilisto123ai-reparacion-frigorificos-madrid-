@@ -20,6 +20,7 @@
   <button role="tab" data-tab="url" aria-selected="false">Enlace</button>
   <button role="tab" data-tab="photo" aria-selected="false">Producto</button>
   <button role="tab" data-tab="history" aria-selected="false">Historial</button>
+  <button role="tab" data-tab="account" aria-selected="false">Cuenta</button>
 </nav>
 
 <main>
@@ -51,6 +52,7 @@
       <label class="btn alt">🖼️ Elegir imagen<input id="p-file" type="file" accept="image/*" multiple hidden></label>
     </div>
     <div class="grid">
+      <label>Tipo de producto<select id="p-cat"><option value="">Detectar</option><option value="reloj">Reloj</option><option value="bolso">Bolso / complemento</option><option value="joya_oro">Joya de oro o plata</option><option value="gemas">Diamante / piedra</option><option value="movil">Móvil</option><option value="electronica">Consola / electrónica</option><option value="calzado_ropa">Zapatillas / ropa</option><option value="perfume">Perfume</option><option value="gafas">Gafas</option></select></label>
       <label>Marca anunciada<input id="p-brand" maxlength="80" placeholder="Rolex, Gucci, iPhone…"></label>
       <label>Precio pedido (€)<input id="p-price" type="number" min="0" inputmode="decimal"></label>
       <label>Valor de tienda (€)<input id="p-ref" type="number" min="0" inputmode="decimal"></label>
@@ -63,6 +65,26 @@
   <section id="tab-history" class="panel" hidden>
     <div id="hist"></div>
     <button class="ghost" id="del-all">Borrar todo mi historial</button>
+  </section>
+
+  <section id="tab-account" class="panel" hidden>
+    <div id="acc-out">
+      <label for="a-email">Email</label><input id="a-email" type="email" autocomplete="email">
+      <label for="a-pw">Contraseña (mín. 10 caracteres)</label><input id="a-pw" type="password" autocomplete="current-password">
+      <div class="row"><button class="btn" id="a-login">Entrar</button><button class="btn alt" id="a-register" type="button">Crear cuenta</button></div>
+      <p class="hint">Con cuenta conservas tu historial en cualquier dispositivo y puedes crear claves de API. Sin cuenta, el historial depende de este navegador.</p>
+    </div>
+    <div id="acc-in" hidden>
+      <p><b id="a-who"></b> · <span id="a-plan"></span></p>
+      <p class="hint" id="a-usage"></p>
+      <h2>Claves de API</h2>
+      <p class="hint">Úsalas con <code>Authorization: Bearer fg_…</code> en <code>/api/analyze/text|url|image</code>.</p>
+      <div id="a-keys"></div>
+      <div class="row"><input id="a-keylabel" maxlength="60" placeholder="Nombre de la clave"><button class="btn alt" id="a-newkey" type="button">Crear clave</button></div>
+      <p id="a-newkeyout" class="ev" role="status"></p>
+      <p><a id="a-admin" href="admin.html" hidden>Panel de administración</a></p>
+      <button class="ghost" id="a-logout">Cerrar sesión</button>
+    </div>
   </section>
 
   <p id="err" class="err" role="alert" hidden></p>

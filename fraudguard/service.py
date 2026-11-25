@@ -11,7 +11,8 @@ from typing import Callable
 
 from pydantic import BaseModel, Field
 
-from . import rules
+from . import checklists, rules
+from .auth import PLANS
 from .catalog import CATALOG, MITIGATORS
 from .config import Settings
 from .engine import Coverage, Mitigator, Signal, evaluate
@@ -27,11 +28,16 @@ class Context(BaseModel):
     price_eur: float | None = Field(default=None, ge=0, le=10_000_000)
     reference_price_eur: float | None = Field(default=None, ge=0, le=10_000_000)
     brand_claimed: str | None = Field(default=None, max_length=80)
+    category: str | None = Field(default=None, max_length=30)
     channel: str | None = None
     situation: str | None = Field(default=None, max_length=2000)
 
     def clean_channel(self) -> str | None:
         return self.channel if self.channel in CHANNELS else None
+
+
+class QuotaExceeded(Exception):
+    pass
 
 
 class RateLimited(Exception):
@@ -89,6 +95,14 @@ class AnalysisService:
     # ------------------------------------------------------------ utilidades
     def check_rate(self, key: str) -> None:
         self.limiter.check(key)
+
+    def check_quota(self, owner: str, plan: str, image: bool) -> None:
+        lim = PLANS.get(plan, PLANS["free"])
+        u = self.store.usage(owner)
+        if u["total"] >= lim["analyses_month"]:
+            raise QuotaExceeded(f"Has agotado los {lim['analyses_month']} análisis mensuales de tu plan ({lim['label']}).")
+        if image and u["images"] >= lim["images_month"]:
+            raise QuotaExceeded(f"Has agotado los {lim['images_month']} análisis con imágenes de tu plan ({lim['label']}).")
 
     def _llm_budget_ok(self) -> bool:
         with self._blk:
@@ -159,7 +173,7 @@ class AnalysisService:
         return list(sigs.values()), list(mits.values()), unverifiable
 
     def _finish(self, owner: str, kind: str, ctx: Context, sigs, mits, unv, cov: Coverage, summary: str,
-                notes: list[str], meta: dict) -> dict:
+                notes: list[str], meta: dict, cat_text: str = "") -> dict:
         a = evaluate(sigs, mits, cov, unv, notes)
         created = now_utc()
         result = {
@@ -168,7 +182,11 @@ class AnalysisService:
             "llm": {"used": cov.llm_used, "model": getattr(self.provider, "model", None) if cov.llm_used else None},
             "meta": meta, "assessment": a.model_dump(),
         }
+        cat = checklists.detect_category(ctx.category, ctx.brand_claimed, cat_text)
+        if kind in ("image", "product") or ctx.channel == "presencial" or ctx.category:
+            result["checklist"] = checklists.checklist_for(cat)
         self.store.save(owner, result, self.s.retention_days)
+        self.store.add_usage(owner, image=kind in ("image", "product"))
         return result
 
     def _price(self, ctx: Context, ext: Extraction | None, text: str):
@@ -178,7 +196,8 @@ class AnalysisService:
         return sigs, unv
 
     # ------------------------------------------------------------ análisis
-    def analyze_text(self, owner: str, text: str, ctx: Context, kind: str = "text") -> dict:
+    def analyze_text(self, owner: str, text: str, ctx: Context, kind: str = "text", plan: str = "free") -> dict:
+        self.check_quota(owner, plan, False)
         text = text.strip()
         full = text + ("\n[Situación descrita por el usuario] " + ctx.situation if ctx.situation else "")
         notes: list[str] = []
@@ -189,10 +208,11 @@ class AnalysisService:
         sigs += psigs
         unv += punv
         cov = Coverage(input_chars=len(full), llm_used=ext is not None, reference_price_given=bool(ctx.reference_price_eur))
-        return self._finish(owner, kind, ctx, sigs, mits, unv, cov, ext.summary if ext else text[:140], notes, {})
+        return self._finish(owner, kind, ctx, sigs, mits, unv, cov, ext.summary if ext else text[:140], notes, {}, full)
 
-    def analyze_url(self, owner: str, url: str, ctx: Context) -> dict:
+    def analyze_url(self, owner: str, url: str, ctx: Context, plan: str = "free") -> dict:
         s = self.s
+        self.check_quota(owner, plan, False)
         t = validate_public_url(url, allow_private=s.allow_private_fetch)      # UnsafeURL → 400
         notes: list[str] = []
         unv: list[str] = []
@@ -247,9 +267,10 @@ class AnalysisService:
         cov = Coverage(input_chars=len(body), llm_used=ext is not None, page_fetched=fetched,
                        domain_age_checked=age_checked, reference_price_given=bool(ctx.reference_price_eur))
         return self._finish(owner, "url", ctx, sigs + psigs, mits + m2, unv + u2 + punv, cov,
-                            ext.summary if ext else f"Enlace a {t.host}", notes, {"host": t.host, "domain": domain})
+                            ext.summary if ext else f"Enlace a {t.host}", notes, {"host": t.host, "domain": domain}, body)
 
-    def analyze_images(self, owner: str, files: list[bytes], text: str, ctx: Context) -> dict:
+    def analyze_images(self, owner: str, files: list[bytes], text: str, ctx: Context, plan: str = "free") -> dict:
+        self.check_quota(owner, plan, True)
         if not files:
             raise BadImage("Aporta al menos una imagen.")
         if len(files) > self.s.max_images:
@@ -269,4 +290,4 @@ class AnalysisService:
         cov = Coverage(input_chars=len(rtext), images=len(images), llm_used=ext is not None,
                        reference_price_given=bool(ctx.reference_price_eur))
         return self._finish(owner, "product" if ctx.brand_claimed else "image", ctx, sigs + psigs, mits, unv + punv, cov,
-                            ext.summary if ext else "Imágenes aportadas", notes, {"images": len(images)})
+                            ext.summary if ext else "Imágenes aportadas", notes, {"images": len(images)}, rtext + " " + (ext.detected_brand or "" if ext else ""))

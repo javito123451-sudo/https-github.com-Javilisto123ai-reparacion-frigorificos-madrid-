@@ -20,15 +20,22 @@ Variables en `.env.example`. Modelo por defecto: `gpt-4o` (`FG_MODEL` para cambi
 
 ## Pruebas
 ```bash
-pip install -r requirements-dev.txt && python -m pytest -q     # 103 tests, sin red ni clave
+pip install -r requirements-dev.txt && python -m pytest -q     # 126 tests, sin red ni clave
 python -m eval.run                                              # métricas del modo reglas
 ```
 
-## Estado real (qué hay y qué no)
-| Hecho y probado | Pendiente |
-|---|---|
-| Motor de riesgo, reglas ES, API de OpenAI (salida estructurada, visión), URL anti-SSRF, RDAP, subida segura de imágenes, historial, borrado, retención, límites, informe HTML imprimible, UI móvil/PWA | **Cuentas de usuario** (hoy: sesión anónima por cookie), **PDF nativo**, pagos/suscripciones, API pública con claves, panel admin, Postgres, escáner presencial avanzado (Fase 2), audio |
+## Cuentas, planes, API y administración
+- **Cuentas** con email + contraseña (scrypt), sesiones `HttpOnly`, límite de intentos y protección CSRF por origen. El historial anónimo se traslada a la cuenta al registrarse.
+- **Planes y cuotas mensuales** (`gratis` 15 análisis / 5 con imágenes; `premium` 300 / 100). **No hay cobro integrado**: el plan lo asigna un administrador.
+- **API para integraciones:** crea claves `fg_…` en la pestaña Cuenta y llama a `/api/analyze/text|url|image` con `Authorization: Bearer fg_…`. Documentación interactiva en `/api/docs`.
+- **Administración** (`/admin.html`): estadísticas agregadas (sin contenido de análisis), usuarios, cambio de plan y desactivación. El primer admin es quien se registre con `FG_ADMIN_EMAIL`.
+- **PDF nativo** por análisis (`/api/analyses/{id}/report.pdf`) y **guía de comprobación por categoría** (reloj, bolso, joyas, gemas, móvil, electrónica, calzado, perfume, gafas) con preguntas para el vendedor.
 
-**No verificado todavía:** la llamada real a la API de OpenAI (en el entorno de desarrollo no había clave; está cubierta con un
-cliente simulado que comprueba la forma exacta de la petición) y la descarga real de URLs/RDAP en Internet (probada con transporte simulado).
-Primer paso al tener clave: `python -m fraudguard` y analizar un mensaje; el chip superior debe decir «IA conectada».
+## Estado real (qué hay y qué no)
+| Hecho y probado (126 tests) | No hecho |
+|---|---|
+| Motor de riesgo, reglas ES, IA con OpenAI (salida estructurada, visión), URL anti-SSRF, RDAP, imágenes seguras, historial, borrado, retención, límites, PDF, UI móvil/PWA, cuentas, cuotas, claves de API, panel admin, guía por categoría | **Pagos/suscripciones reales** (necesita tu cuenta de pasarela), **verificación de email y recuperar contraseña** (necesita un proveedor de correo), **Postgres** (hoy SQLite), **cola de tareas**, comparación visual con referencias oficiales (no existe una fuente legal de imágenes de referencia), audio, apps nativas |
+
+**No verificado todavía:** la llamada real a la API de OpenAI (sin clave en desarrollo; cubierta con cliente simulado que comprueba
+la forma exacta de la petición) y la descarga real de URLs/RDAP en Internet (probada con transporte simulado).
+Primer paso al tener clave: `python -m fraudguard`, analizar un mensaje; el chip superior debe decir «IA conectada».

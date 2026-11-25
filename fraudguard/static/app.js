@@ -22,6 +22,7 @@ function showTab(name) {
   document.querySelectorAll(".panel").forEach((p) => (p.hidden = p.id !== "tab-" + name));
   $("#result").hidden = true; error("");
   if (name === "history") loadHistory();
+  if (name === "account") loadAccount();
 }
 document.querySelectorAll(".tabs button").forEach((b) => b.addEventListener("click", () => showTab(b.dataset.tab)));
 
@@ -69,6 +70,13 @@ function render(r) {
   const list = (title, items) => { if (!items.length) return; root.append(el("h2", null, title)); const u = el("ul", "plain"); items.forEach((t) => u.append(el("li", null, t))); root.append(u); };
   list("No se pudo verificar", a.unverifiable);
   list("Qué hacer ahora", a.recommendations);
+  if (r.checklist) {
+    const ck = r.checklist;
+    list(`Guía de comprobación: ${ck.label}`, ck.checks);
+    list("Preguntas para el vendedor", ck.questions);
+    list("Verificación definitiva", [ck.professional]);
+    list("Recuerda", ck.tips);
+  }
   list("Limitaciones", a.limitations);
 
   const act = el("div", "actions");
@@ -77,7 +85,8 @@ function render(r) {
   copy.addEventListener("click", () => navigator.clipboard?.writeText(`${a.band_label}${a.score != null ? " (" + a.score + "/100)" : ""} — ${r.summary}\n` + a.signals.map((s) => "• " + s.title).join("\n")));
   const del = el("button", null, "Borrar");
   del.addEventListener("click", async () => { await api(`/api/analyses/${r.id}`, { method: "DELETE" }); root.hidden = true; });
-  act.append(rep, copy, del); root.append(act);
+  const pdf = el("a", null, "⬇️ PDF"); pdf.href = `/api/analyses/${r.id}/report.pdf`; pdf.rel = "noopener";
+  act.append(rep, pdf, copy, del); root.append(act);
   root.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -113,7 +122,7 @@ $("#go-photo").addEventListener("click", () => {
   if (!photos.length) return error("Añade al menos una foto.");
   const fd = new FormData(); photos.forEach((f) => fd.append("files", f));
   fd.append("text", "");
-  fd.append("context", JSON.stringify(ctxClean({ price_eur: num("#p-price"), reference_price_eur: num("#p-ref"), brand_claimed: $("#p-brand").value.trim(), channel: "presencial", situation: $("#p-sit").value.trim() })));
+  fd.append("context", JSON.stringify(ctxClean({ price_eur: num("#p-price"), reference_price_eur: num("#p-ref"), brand_claimed: $("#p-brand").value.trim(), category: $("#p-cat").value, channel: "presencial", situation: $("#p-sit").value.trim() })));
   run(() => api("/api/analyze/image", { method: "POST", body: fd }));
 });
 
@@ -136,3 +145,27 @@ api("/api/health").then((h) => {
   const c = $("#aistate"); c.textContent = h.ai_connected ? `IA conectada · OpenAI ${h.model}` : "Modo reglas (sin IA conectada)"; c.classList.toggle("on", h.ai_connected);
   $("#ret").textContent = h.retention_days;
 }).catch(() => {});
+
+// ---------------------------------------------------------------- cuenta
+async function loadAccount() {
+  const m = await api("/api/me");
+  $("#acc-out").hidden = m.authenticated; $("#acc-in").hidden = !m.authenticated;
+  if (!m.authenticated) return;
+  $("#a-who").textContent = m.email; $("#a-plan").textContent = `Plan ${m.plan_label}`;
+  $("#a-usage").textContent = `Este mes: ${m.usage.total}/${m.limits.analyses_month} análisis · ${m.usage.images}/${m.limits.images_month} con imágenes`;
+  $("#a-admin").hidden = !m.is_admin;
+  const box = $("#a-keys"); box.replaceChildren();
+  for (const k of await api("/api/keys")) {
+    const row = el("div", "hrow"); const d = el("div"); d.append(el("span", null, `${k.prefix}… ${k.label || ""}`), el("small", null, k.last_used_at ? "usada " + new Date(k.last_used_at).toLocaleDateString("es-ES") : "sin usar"));
+    const x = el("button", "ghost", "Revocar"); x.addEventListener("click", async () => { await api(`/api/keys/${k.id}`, { method: "DELETE" }); loadAccount(); });
+    row.append(d, x); box.append(row);
+  }
+}
+const creds = () => ({ email: $("#a-email").value.trim(), password: $("#a-pw").value });
+async function authCall(path) { error(""); try { await post(path, creds()); $("#a-pw").value = ""; await loadAccount(); } catch (e) { error(e.message); } }
+$("#a-login").addEventListener("click", () => authCall("/api/auth/login"));
+$("#a-register").addEventListener("click", () => authCall("/api/auth/register"));
+$("#a-logout").addEventListener("click", async () => { await post("/api/auth/logout", {}); loadAccount(); });
+$("#a-newkey").addEventListener("click", async () => {
+  try { const k = await post("/api/keys", { label: $("#a-keylabel").value }); $("#a-newkeyout").textContent = `${k.key} — ${k.note}`; await loadAccount(); } catch (e) { error(e.message); }
+});
