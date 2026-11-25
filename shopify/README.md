@@ -4,10 +4,10 @@ Tema Online Store 2.0 (`theme/`) + catálogo (`catalog/products.json`) + sincron
 Shopify es el canal comercial; el motor sigue siendo Omnitech-Core (ver `docs/omnicommerce/`, repo `omnitech-core-v1`, rama `claude/omnicommerce-bridge`).
 
 ## Flujo comercial (decisión del propietario, 25-nov-2026)
-**Primero se capta, un administrador autoriza, y solo entonces se puede contratar; la activación es manual tras el pago.**
+**Primero se capta, un administrador autoriza, y solo entonces se puede contratar; si está pagado y autorizado, la activación es automática** (ajuste configurable en OmniCommerce Control → Integraciones).
 1. El público solo ve «Solicitar contratación» (`/pages/solicitar`): el formulario envía la captación a `…/api/commerce-public/requests` (ajustes del tema → «URL de la API de captación»). No hay compra ni cobro.
 2. En OmniCommerce Control → Captación, un SUPER_ADMIN autoriza plan, módulos y vigencia. Si hay credenciales, el cliente recibe la etiqueta `autorizado` en Shopify y el tema le muestra «Contratar».
-3. El cliente autorizado compra; el pedido se enlaza a su autorización; un administrador activa.
+3. El cliente autorizado compra; el pedido se enlaza a su autorización y, si está pagado, el entorno se activa solo (si algo falla, queda pendiente para activarlo a mano).
 **Honestidad sobre la barrera:** ocultar el botón es solo comodidad. La barrera real es del servidor: sin autorización vigente del mismo plan, la activación se rechaza y la compra queda señalada para reembolso. Para impedir el checkout directo haría falta una Shopify Function de validación de carrito (no incluida).
 
 ## Contenido

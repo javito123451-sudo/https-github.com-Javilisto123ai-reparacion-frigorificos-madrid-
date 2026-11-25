@@ -11,4 +11,4 @@ Pendiente: tema/productos Shopify (Fase 3), pantallas React de OmniCommerce Cont
 
 **Fase 3 (tienda Shopify) — borrador completo en `shopify/`:** tema OS2.0, catálogo y sincronizador (dry-run probado). Pendiente de credenciales para aplicar/probar en tienda real. Ver `shopify/README.md`.
 
-**Cambio de flujo (25-nov):** primero se capta → autoriza un admin → se puede contratar → se activa manualmente tras el pago. Implementado en `omnitech-core-v1` (28/28 pruebas) y en el tema (`/pages/solicitar`). Pendiente de confirmar: si tras pagar debe seguir habiendo una segunda activación manual (ahora sí) o ser automática.
+**Cambio de flujo (25-nov):** primero se capta → autoriza un admin → se puede contratar → se activa manualmente tras el pago. Implementado en `omnitech-core-v1` (28/28 pruebas) y en el tema (`/pages/solicitar`). **Actualizado:** pagado + autorizado ⇒ activación automática (ajuste configurable, activo por defecto; 35/35 pruebas).
