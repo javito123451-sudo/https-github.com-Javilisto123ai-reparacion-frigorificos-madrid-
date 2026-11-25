@@ -22,6 +22,10 @@ class UnsafeURL(ValueError):
     """La URL no se puede analizar de forma segura."""
 
 
+class UnresolvableURL(UnsafeURL):
+    """El dominio no resuelve (puede estar caído): se puede analizar la URL, pero no descargarla."""
+
+
 @dataclass
 class Target:
     url: str
@@ -60,9 +64,9 @@ def validate_public_url(url: str, *, resolver=_resolve_default, allow_private: b
     try:
         ips = [host_idna] if _is_ip(host_idna) else resolver(host_idna)
     except OSError:
-        raise UnsafeURL("No se pudo resolver el dominio.")
+        raise UnresolvableURL("No se pudo resolver el dominio.")
     if not ips:
-        raise UnsafeURL("No se pudo resolver el dominio.")
+        raise UnresolvableURL("No se pudo resolver el dominio.")
     for ip in ips:
         addr = ipaddress.ip_address(ip)
         if not addr.is_global and not allow_private:

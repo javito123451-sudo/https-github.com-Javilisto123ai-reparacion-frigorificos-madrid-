@@ -28,7 +28,7 @@ def _s(code, category, weight, title, advice, definition):
 CATALOG: dict[str, SignalDef] = dict([
     _s("ADVANCE_PAYMENT_REQUESTED", "pago", 0.60, "Piden un pago por adelantado (señal/reserva)",
        "No pagues por adelantado a desconocidos. Paga solo al recibir y comprobar, o con el pago protegido de la plataforma.",
-       "Se exige dinero antes de poder ver o recibir el producto/servicio (señal, reserva, adelanto)."),
+       "Se exige dinero a un desconocido antes de poder ver o recibir el producto/servicio (señal, reserva, adelanto). NO cuenta una señal o depósito pagado dentro de una plataforma reconocida con pago protegido (Booking, Airbnb, etc.) ni la reserva con política clara de cancelación."),
     _s("PAYMENT_UNTRACEABLE", "pago", 0.55, "Método de pago difícil de rastrear o revertir",
        "Evita tarjetas regalo, criptomonedas, Western Union o similares: si es un fraude, no se recupera.",
        "Se pide pagar con gift cards, criptomonedas, Western Union/MoneyGram, Paysafecard u otro medio irreversible."),
@@ -49,7 +49,7 @@ CATALOG: dict[str, SignalDef] = dict([
        "Se usa una historia personal (necesidad de dinero, enfermedad, deuda) para justificar el precio o la prisa."),
     _s("SENSITIVE_DATA_REQUESTED", "datos", 0.75, "Piden datos sensibles (códigos, claves, DNI, tarjeta)",
        "No compartas códigos SMS, claves, CVV ni fotos de tu DNI o tarjeta. Ninguna compraventa legítima los necesita.",
-       "Se pide el código de verificación SMS, contraseña, PIN, CVV, número de tarjeta/cuenta o documentos de identidad."),
+       "Se PIDE al destinatario el código de verificación SMS, contraseña, PIN, CVV, número de tarjeta/cuenta o documentos de identidad. NO cuenta un aviso legítimo que entrega un código y advierte de no compartirlo."),
     _s("IMPERSONATION_AUTHORITY", "suplantación", 0.55, "Se hacen pasar por un banco, organismo o empresa",
        "Contacta con la entidad por sus canales oficiales (no por el enlace o teléfono del mensaje). INCIBE: 017.",
        "El mensaje dice proceder de un banco, Hacienda, policía, Correos, etc., alertando de un problema o reembolso."),

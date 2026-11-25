@@ -98,3 +98,20 @@ def test_official_urls_clean(url):
 def test_registrable_domain():
     assert registrable_domain("www.tienda.com.es") == "tienda.com.es"
     assert registrable_domain("a.b.example.com") == "example.com"
+
+
+def test_extract_price_only_when_unambiguous():
+    from fraudguard.rules import extract_price
+    assert extract_price("Vendo reloj por 100 euros") == 100
+    assert extract_price("Vendo 1.250 € negociables") == 1250
+    assert extract_price("Paga 4,95€ de seguro de envío en este enlace") is None       # tasa, no precio
+    assert extract_price("Hazme una señal de 50€ para reservarlo") is None
+    assert extract_price("Cuesta 100€ y envío 5€") is None                              # ambiguo: dos importes
+    assert extract_price("sin precio") is None
+
+
+def test_shipping_fee_is_not_mistaken_for_item_price():
+    s, _ = detect_text("PS5 nueva. Paga 4,95€ de seguro de envío en este enlace de Correos")
+    from fraudguard.rules import extract_price
+    psigs, _ = detect_price(extract_price("PS5 nueva. Paga 4,95€ de seguro de envío"), None, "PS5")
+    assert psigs == []

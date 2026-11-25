@@ -201,9 +201,16 @@ def detect_url(url: str) -> tuple[list[Signal], str | None]:
 _AMOUNT = re.compile(r"(\d{1,3}(?:[.]\d{3})+|\d{1,7})(?:,(\d{1,2}))?\s?(?:€|eur\b|euros?)", re.I)
 
 
+_FEE_WORDS = re.compile(r"seguro|envio|tasa|gastos|comision|senal|reserva|adelanto|fianza|deposito|cuota|impuesto|aduana|desbloque")
+
+
 def extract_price(text: str) -> float | None:
-    """Primer importe en euros escrito en el texto (heurístico); None si no hay."""
-    m = _AMOUNT.search(text)
-    if not m:
+    """Importe en euros del PRODUCTO, solo si es inequívoco: un único importe y no asociado a tasas, envío o señales."""
+    folded = fold(text)
+    found = [(m, float(m.group(1).replace(".", "") + ("." + m.group(2) if m.group(2) else ""))) for m in _AMOUNT.finditer(text)]
+    if len({v for _, v in found}) != 1:
         return None
-    return float(m.group(1).replace(".", "") + ("." + m.group(2) if m.group(2) else ""))
+    m, v = found[0]
+    if _FEE_WORDS.search(folded[max(0, m.start() - 35): m.end() + 35]):
+        return None
+    return v

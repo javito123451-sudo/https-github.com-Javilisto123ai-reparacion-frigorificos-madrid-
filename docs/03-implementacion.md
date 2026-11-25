@@ -20,9 +20,9 @@ SSRF (IP pública validada en cada salto, petición fijada a la IP, puertos/esqu
 auditoría, minimización (no se guarda texto ni imágenes de entrada), informe con escape HTML.
 
 ## Calidad medida (honesta)
-Modo reglas sobre `eval/cases.jsonl` (48 casos **sintéticos**): recall 88 %, falsos positivos 0 %. **Optimista**: las reglas se
-ajustaron mirando ese mismo conjunto y los pesos del motor son provisionales. Hace falta un conjunto real y separado para calibrar.
-El rendimiento con IA no se ha medido (sin clave).
+48 casos **sintéticos** (`eval/`): modo reglas recall 83 % / FP 0 %; con IA real (gpt-4o) recall 96 % / FP 0 %. Optimista: las reglas y las
+definiciones del prompt se ajustaron mirando esos mismos casos y los pesos del motor son provisionales. Hace falta un conjunto real y
+separado para calibrar. Coste por análisis y fotos reales de productos: sin medir.
 
 ## Riesgos abiertos
 Reglas de precio por marca = umbrales internos orientativos (siempre etiquetados como tales). Cumplimiento RGPD/AI Act y términos

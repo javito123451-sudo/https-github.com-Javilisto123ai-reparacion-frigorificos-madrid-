@@ -31,7 +31,7 @@ class LLMMitigator(BaseModel):
 
 class Extraction(BaseModel):
     summary: str = Field(description="Resumen neutral de 1-2 frases de lo que se ofrece o se pide.")
-    price_eur: float | None = Field(default=None, description="Precio pedido en euros si aparece explícito; si no, null.")
+    price_eur: float | None = Field(default=None, description="Precio en euros del PRODUCTO o servicio ofrecido, solo si aparece explícito. No incluyas tasas, seguros de envío, señales, comisiones ni importes que pidan pagar; si no hay precio claro del producto, null.")
     detected_brand: str | None = Field(default=None, description="Marca anunciada o visible, si la hay; si no, null.")
     extracted_text: str | None = Field(default=None, description="Texto legible en las imágenes (OCR), si hay.")
     signals: list[LLMSignal]

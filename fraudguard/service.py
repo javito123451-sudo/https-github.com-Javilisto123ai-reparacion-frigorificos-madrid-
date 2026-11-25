@@ -18,7 +18,9 @@ from .config import Settings
 from .engine import Coverage, Mitigator, Signal, evaluate
 from .imaging import BadImage, sanitize_image
 from .llm import Extraction, LLMError, LLMProvider, LLMRefusal
-from .netsafe import UnsafeURL, extract_page, safe_fetch, validate_public_url
+from urllib.parse import urlsplit
+
+from .netsafe import UnresolvableURL, UnsafeURL, extract_page, safe_fetch, validate_public_url
 from .store import Store, now_utc
 
 CHANNELS = {"wallapop", "vinted", "marketplace", "milanuncios", "web", "email", "sms", "whatsapp", "presencial", "otro"}
@@ -213,12 +215,21 @@ class AnalysisService:
     def analyze_url(self, owner: str, url: str, ctx: Context, plan: str = "free") -> dict:
         s = self.s
         self.check_quota(owner, plan, False)
-        t = validate_public_url(url, allow_private=s.allow_private_fetch)      # UnsafeURL → 400
         notes: list[str] = []
         unv: list[str] = []
+        try:
+            t = validate_public_url(url, allow_private=s.allow_private_fetch)      # UnsafeURL → 400
+            host = t.host
+        except UnresolvableURL:
+            if urlsplit(url.strip()).scheme not in ("http", "https"):
+                raise UnsafeURL("Solo se admiten enlaces http:// o https://.")
+            t, host = None, (urlsplit(url.strip()).hostname or "")
+            unv.append("El dominio no se resuelve ahora mismo (puede haber sido retirado): se analiza solo la dirección, no el contenido.")
         usigs, domain = rules.detect_url(url)
         page_text, page_flags, fetched = "", "", False
         try:
+            if t is None:
+                raise UnresolvableURL("sin resolución")
             r = self.fetch(url, allow_private=s.allow_private_fetch, trust_env=s.fetch_trust_env)
             fetched = r.status < 400
             if fetched:
@@ -234,6 +245,8 @@ class AnalysisService:
                     usigs += [x for x in fsigs if x.code not in have]
             else:
                 unv.append(f"La página respondió con estado HTTP {r.status}; no se pudo analizar su contenido.")
+        except UnresolvableURL:
+            pass
         except UnsafeURL as e:
             unv.append(f"No se pudo cargar la página de forma segura: {e}")
         except Exception:
@@ -241,7 +254,7 @@ class AnalysisService:
 
         mits: list[Mitigator] = []
         age_checked = None
-        if domain:
+        if domain and t is not None:
             try:
                 days = _rdap_age_days(domain, self.fetch, s)
                 age_checked = days is not None
@@ -267,7 +280,7 @@ class AnalysisService:
         cov = Coverage(input_chars=len(body), llm_used=ext is not None, page_fetched=fetched,
                        domain_age_checked=age_checked, reference_price_given=bool(ctx.reference_price_eur))
         return self._finish(owner, "url", ctx, sigs + psigs, mits + m2, unv + u2 + punv, cov,
-                            ext.summary if ext else f"Enlace a {t.host}", notes, {"host": t.host, "domain": domain}, body)
+                            ext.summary if ext else f"Enlace a {host}", notes, {"host": host, "domain": domain}, body)
 
     def analyze_images(self, owner: str, files: list[bytes], text: str, ctx: Context, plan: str = "free") -> dict:
         self.check_quota(owner, plan, True)

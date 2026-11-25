@@ -310,3 +310,13 @@ def test_llm_schema_only_allows_catalog_codes():
     enum = Extraction.model_json_schema()["$defs"]["LLMSignal"]["properties"]["code"]["enum"]
     from fraudguard.catalog import CATALOG
     assert set(enum) <= set(CATALOG) and "PRICE_FAR_BELOW_REFERENCE" in enum and "DOMAIN_RECENTLY_REGISTERED" not in enum
+
+
+def test_unresolvable_domain_is_still_analyzed_by_structure(make_client):
+    c = make_client(provider=None)
+    r = c.post("/api/analyze/url", json={"url": "https://wallapop-envios.invalid/pago"})
+    assert r.status_code == 200
+    a = r.json()["assessment"]
+    assert any(s["code"] == "URL_LOOKALIKE_DOMAIN" for s in a["signals"])
+    assert any("no se resuelve" in u for u in a["unverifiable"])
+    assert c.post("/api/analyze/url", json={"url": "ftp://wallapop-envios.invalid/"}).status_code == 400
