@@ -1,0 +1,45 @@
+<section class="sec" id="solicitar"><div class="wrap narrow">
+  <h1>{{ section.settings.title }}</h1><p class="lead">{{ section.settings.intro }}</p>
+  <form class="form" id="capture-form" novalidate>
+    <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+    <label>Nombre<input name="name" required autocomplete="name"></label>
+    <label>Empresa<input name="company" autocomplete="organization"></label>
+    <label>Email<input type="email" name="email" required autocomplete="email"></label>
+    <label>Teléfono<input type="tel" name="phone" autocomplete="tel"></label>
+    <label>Plan de interés
+      <select name="planInterest"><option value="">Aún no lo sé</option><option value="starter">Starter</option><option value="professional">Professional</option><option value="enterprise">Enterprise</option></select></label>
+    <label>¿Qué necesitas? (módulos, número de usuarios…)<textarea name="message" rows="4"></textarea></label>
+    <label class="check"><input type="checkbox" name="consentPrivacy" required> He leído la <a href="{{ policies.privacy_policy.url }}">política de privacidad</a> y acepto el tratamiento de mis datos para valorar mi solicitud.</label>
+    <label class="check"><input type="checkbox" name="consentMarketing"> Quiero recibir novedades de Omnitech-Core (opcional).</label>
+    <button class="btn" type="submit">{{ section.settings.button }}</button>
+    <p id="capture-msg" role="status" class="notice" hidden></p>
+  </form>
+  <p class="muted small">No se contrata ni se cobra nada en este paso. Revisamos tu solicitud y, si la autorizamos, te avisamos y podrás contratar. Tras el pago, activamos tu entorno.</p>
+</div></section>
+<script>
+(function(){
+  var f=document.getElementById('capture-form'); if(!f) return;
+  var url={{ settings.capture_api_url | json }}, msg=document.getElementById('capture-msg');
+  var q=new URLSearchParams(location.search).get('plan'); if(q&&f.planInterest) f.planInterest.value=q;
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!url){show('El formulario aún no está configurado. Escríbenos por la página de contacto.');return;}
+    if(!f.reportValidity()) return;
+    var b={name:f.name.value,company:f.company.value,email:f.email.value,phone:f.phone.value,planInterest:f.planInterest.value,message:f.message.value,
+      consentPrivacy:f.consentPrivacy.checked,consentMarketing:f.consentMarketing.checked,website:f.website.value,source:'shopify_store'};
+    f.querySelector('button').disabled=true;
+    fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)})
+      .then(function(r){ if(r.status===429) throw new Error('Demasiados envíos. Inténtalo más tarde.'); if(!r.ok) throw new Error('Revisa los datos e inténtalo de nuevo.'); f.reset(); show('Gracias. Hemos recibido tu solicitud y la revisaremos. Te contactaremos por email.'); })
+      .catch(function(err){ show(err.message||'No se pudo enviar. Inténtalo más tarde.'); })
+      .finally(function(){ f.querySelector('button').disabled=false; });
+  });
+  function show(t){ msg.textContent=t; msg.hidden=false; }
+})();
+</script>
+{% schema %}
+{ "name": "Solicitud de contratación (captación)", "settings": [
+  { "type": "text", "id": "title", "label": "Título", "default": "Solicitar contratación" },
+  { "type": "textarea", "id": "intro", "label": "Introducción", "default": "Cuéntanos qué necesitas. Primero revisamos tu caso." },
+  { "type": "text", "id": "button", "label": "Botón", "default": "Enviar solicitud" }
+], "presets": [{ "name": "Solicitud de contratación" }] }
+{% endschema %}

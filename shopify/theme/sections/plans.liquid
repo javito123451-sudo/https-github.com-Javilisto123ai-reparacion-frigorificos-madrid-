@@ -10,7 +10,9 @@
       <p class="price">{% if v.compare_at_price > v.price %}<s class="muted">{{ v.compare_at_price | money_without_trailing_zeros }}</s> {% endif %}{{ v.price | money_without_trailing_zeros }}<small>/mes + IVA</small></p>
       {% if v.compare_at_price > v.price %}<p class="tag">Promoción de lanzamiento</p>{% endif %}
       <div class="prose">{{ product.description }}</div>
-      <a class="btn" href="{{ product.url }}">Contratar</a>
+      {%- assign plan_key = product.metafields.omni.plan.value | default: product.handle -%}
+      {% if customer and customer.tags contains 'autorizado' %}<a class="btn" href="{{ product.url }}">Contratar</a>
+      {% else %}<a class="btn" href="/pages/solicitar?plan={{ plan_key }}">Solicitar contratación</a>{% endif %}
     </article>
   {% else %}
     <p class="muted">Añade los productos de plan a la colección «{{ section.settings.collection }}».</p>
@@ -21,8 +23,8 @@
 {% schema %}
 { "name": "Planes", "settings": [
   { "type": "text", "id": "title", "label": "Título", "default": "Planes" },
-  { "type": "textarea", "id": "intro", "label": "Introducción", "default": "Suscripción mensual. Tu contratación se activa tras la validación de nuestro equipo." },
+  { "type": "textarea", "id": "intro", "label": "Introducción", "default": "Suscripción mensual. Primero revisamos tu solicitud; si la autorizamos, podrás contratar, y activamos tu entorno tras el pago." },
   { "type": "text", "id": "collection", "label": "Handle de la colección", "default": "planes" },
-  { "type": "text", "id": "note", "label": "Nota", "default": "Precios sin IVA. La compra registra tu solicitud; el acceso se activa cuando un administrador la aprueba." }
+  { "type": "text", "id": "note", "label": "Nota", "default": "Precios sin IVA. No se puede contratar sin autorización previa de nuestro equipo." }
 ], "presets": [{ "name": "Planes" }] }
 {% endschema %}

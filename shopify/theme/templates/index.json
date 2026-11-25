@@ -1,8 +1,62 @@
-{ "sections": {
-  "hero": { "type": "hero", "settings": { "eyebrow": "Plataforma empresarial con IA", "title": "Omnitech-Core: tu empresa, conectada", "text": "CRM, marketing, facturación, fiscalidad y asistente de IA en una sola plataforma modular. Cada empresa en su propio entorno.", "cta_label": "Ver planes", "cta_url": "/pages/planes", "cta2_label": "Solicitar demostración", "cta2_url": "/pages/demo" } },
-  "why": { "type": "feature-grid", "settings": { "title": "Una infraestructura, no una herramienta suelta" }, "blocks": {
-    "b1": { "type": "item", "settings": { "title": "Entorno propio por empresa", "text": "Cada cliente trabaja en su workspace, con sus datos separados." } },
-    "b2": { "type": "item", "settings": { "title": "Modular", "text": "Empieza con un plan y añade módulos según tus necesidades.", "link": "/pages/modulos" } },
-    "b3": { "type": "item", "settings": { "title": "Contratación validada", "text": "Contratas online y nuestro equipo valida tu alta antes de activar tu acceso." } } }, "block_order": ["b1", "b2", "b3"] },
-  "plans": { "type": "plans", "settings": { "collection": "planes" } } },
-  "order": ["hero", "why", "plans"] }
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Plataforma empresarial con IA",
+        "title": "Omnitech-Core: tu empresa, conectada",
+        "text": "CRM, marketing, facturación, fiscalidad y asistente de IA en una sola plataforma modular. Cada empresa en su propio entorno.",
+        "cta_label": "Solicitar contratación",
+        "cta_url": "/pages/solicitar",
+        "cta2_label": "Ver planes",
+        "cta2_url": "/pages/planes"
+      }
+    },
+    "why": {
+      "type": "feature-grid",
+      "settings": {
+        "title": "Una infraestructura, no una herramienta suelta"
+      },
+      "blocks": {
+        "b1": {
+          "type": "item",
+          "settings": {
+            "title": "Entorno propio por empresa",
+            "text": "Cada cliente trabaja en su workspace, con sus datos separados."
+          }
+        },
+        "b2": {
+          "type": "item",
+          "settings": {
+            "title": "Modular",
+            "text": "Empieza con un plan y añade módulos según tus necesidades.",
+            "link": "/pages/modulos"
+          }
+        },
+        "b3": {
+          "type": "item",
+          "settings": {
+            "title": "Contratación autorizada",
+            "text": "Primero revisamos tu solicitud. Si la autorizamos, contratas y activamos tu entorno tras el pago."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "plans": {
+      "type": "plans",
+      "settings": {
+        "collection": "planes"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "why",
+    "plans"
+  ]
+}
