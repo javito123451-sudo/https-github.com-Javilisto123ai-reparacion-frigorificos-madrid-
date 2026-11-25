@@ -2,7 +2,7 @@
 
 Código en `javito123451-sudo/omnitech-core-v1`, rama `claude/omnicommerce-bridge` (sin tocar `main`). Detalle en `docs/omnicommerce/` de esa rama.
 
-**Precios confirmados** (mensual, sin IVA): Starter 149 € (promo lanzamiento 99 €, desactivada), Professional 249 €, Enterprise 1.000 €. Stripe no es fuente (solo existió un 99 € + IVA antiguo, descartado).
+**Precios confirmados** (mensual, sin IVA): Starter 149 € (promo lanzamiento 99 €, desactivada), Professional 249 €, Enterprise 1.000 €. Módulos (complemento mensual, no se venden sueltos): sin IA 25 €, IA ligera 35 €, IA pesada 45 €; CRM incluido. Stripe no es fuente (solo existió un 99 € + IVA antiguo, descartado).
 
 Hecho: Fase 2 (migración aditiva) y Fase 4 (Bridge) y backend de Fase 5; Fase 6 parcial con 20/20 pruebas en BD real.
 Pendiente: tema/productos Shopify (Fase 3), pantallas React de OmniCommerce Control, pruebas con Shopify real, puesta en producción.
