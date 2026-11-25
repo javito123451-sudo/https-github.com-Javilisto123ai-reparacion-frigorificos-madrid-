@@ -7,7 +7,7 @@ Código en `javito123451-sudo/omnitech-core-v1`, rama `claude/omnicommerce-bridg
 Hecho: Fase 2 (migración aditiva) y Fase 4 (Bridge) y backend de Fase 5; Fase 6 parcial con 20/20 pruebas en BD real.
 Pendiente: tema/productos Shopify (Fase 3), pantallas React de OmniCommerce Control, pruebas con Shopify real, puesta en producción.
 
-**Discrepancias a decidir:** `credit_plans` (BD) dice Professional 349 € y existe plan Business 699 €; el catálogo comercial usa Professional 249 € y no incluye Business. No se ha tocado `credit_plans`.
+**Decidido (25-nov):** el plan Business no se comercializa (mismo acceso que Enterprise; competiría con él). Se conserva en BD como plan heredado. `credit_plans` (Professional 349 €, Business 699 €) es configuración interna de créditos IA y no alimenta la tienda; no se ha tocado. Si quieres alinear Professional a 249 € ahí también, es un cambio de datos de una línea que haré cuando lo pidas.
 
 **Fase 3 (tienda Shopify) — borrador completo en `shopify/`:** tema OS2.0, catálogo y sincronizador (dry-run probado). Pendiente de credenciales para aplicar/probar en tienda real. Ver `shopify/README.md`.
 
